@@ -26,7 +26,7 @@ class SetupCommand extends Command {
    *
    * @return {String}
    */
-  get description () {
+  static get description () {
     return 'Setup migrations for Cerberus'
   }
 
