@@ -94,7 +94,7 @@ class BasePermission {
       }, trx)
     })
 
-    return this.info(`Permissions for ${resourceName} created successfully!`)
+    return this.info(`Permissions for ${resourceName} resource created successfully!`)
   }
 }
 
