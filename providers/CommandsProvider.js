@@ -7,6 +7,7 @@ class CommandsProvider extends ServiceProvider {
     this.app.bind('Adonis/Commands/cerberus:init', () => require('../commands/init'))
     this.app.bind('Adonis/Commands/cerberus:role', () => require('../commands/Role'))
     this.app.bind('Adonis/Commands/cerberus:resource', () => require('../commands/Resource'))
+    this.app.bind('Adonis/Commands/cerberus:permission', () => require('../commands/Permission'))
   }
 
   boot () {
@@ -14,6 +15,7 @@ class CommandsProvider extends ServiceProvider {
     ace.addCommand('Adonis/Commands/cerberus:init')
     ace.addCommand('Adonis/Commands/cerberus:role')
     ace.addCommand('Adonis/Commands/cerberus:resource')
+    ace.addCommand('Adonis/Commands/cerberus:permission')
   }
 }
 
