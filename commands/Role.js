@@ -52,6 +52,9 @@ class SetupCommand extends Command {
       })
 
       this.success(`${this.icon('success')} role ${name} created.`)
+
+      // Close Databse connection
+      Database.close()
     } catch ({ message }) {
       this.error(message)
     }
