@@ -76,7 +76,7 @@ class BasePermission {
     const resource = await Resource.findBy('name', resourceName)
     if (!resource) {
       Database.close()
-      return this.error('Permission not found')
+      return this.error('Resource not found')
     }
 
     // Function for permission checking

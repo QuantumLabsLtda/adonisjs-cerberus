@@ -54,11 +54,11 @@ class PermissionCommand extends Command {
    *
    * @return {void}
    */
-  async handle ({ resourceName }) {
+  async handle (args, { resourceName }) {
     try {
       // Ask for permission parameters
       await this.askPermissionParameters(true, resourceName)
-      await this.createPermission({ resourceName })
+      await this.createPermission({ resourceName: resourceName })
 
       await Database.close()
     } catch ({ message }) {
