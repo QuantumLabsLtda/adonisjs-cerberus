@@ -4,6 +4,13 @@
 const Model = use('Model')
 
 class Permission extends Model {
+  role () {
+    return this.belongsTo('Cerberus/Models/Role')
+  }
+
+  resource () {
+    return this.belongsTo('Cerberus/Models/Resource')
+  }
 }
 
 module.exports = Permission

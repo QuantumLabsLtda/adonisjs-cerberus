@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Role extends Model {
+  permissions () {
+    return this.hasMany('Cerberus/Models/Permission')
+  }
 }
 
 module.exports = Role
