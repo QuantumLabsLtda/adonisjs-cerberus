@@ -3,6 +3,10 @@
 const { Command } = require('@adonisjs/ace')
 const Resource = use('Cerberus/Models/Resource')
 const Database = use('Database')
+const Helpers = use('Helpers')
+const fs = Helpers.promisify(require('fs'))
+const path = require('path')
+const { asyncForEach } = require('../util/Util')
 
 class ResourceCommand extends Command {
   /**
@@ -15,7 +19,7 @@ class ResourceCommand extends Command {
    * @return {String}
    */
   static get signature () {
-    return 'cerberus:resource { name: Name of the resource } { slug?: Short name for resource }'
+    return 'cerberus:resource { name?: Name of the resource } { slug?: Short name for resource } { --from-migrations: Create a resource for each Model }'
   }
 
   /**
@@ -31,6 +35,33 @@ class ResourceCommand extends Command {
   }
 
   /**
+   * Creates the resource
+   *
+   * @method createResource
+   *
+   * @param  {String} name
+   * @param  {String} slug
+   *
+   * @return {void}
+   */
+  async createResource (name, slug) {
+    // If there's no slug, uses the resource name instead
+    if (!slug) slug = name
+
+    await Database.transaction(async (trx) => {
+      // Create the resource
+      await Resource.create({ name, slug })
+    })
+
+    this.success(`${this.icon('success')} resource ${name} created.`)
+
+    // Close Databse connection
+    await Database.close()
+
+    return true
+  }
+
+  /**
    * The handle method to be executed
    * when running command
    *
@@ -41,20 +72,22 @@ class ResourceCommand extends Command {
    *
    * @return {void}
    */
-  async handle ({ name, slug }) {
+  async handle ({ name, slug }, { fromMigrations }) {
     try {
-      // If there's no slug, uses the resource name instead
-      if (!slug) slug = name
+      if (fromMigrations) {
+        const modelsPath = path.join(Helpers.appRoot(), 'app/Models')
 
-      await Database.transaction(async (trx) => {
-        // Create the resource
-        await Resource.create({ name, slug })
-      })
+        let models = await fs.readdir(modelsPath)
+        models = models.filter((val) => val.split('.')[1] === 'js')
 
-      this.success(`${this.icon('success')} resource ${name} created.`)
+        await asyncForEach((models), async (model) => {
+          const modelName = model.split('.')[0]
 
-      // Close Databse connection
-      Database.close()
+          await this.createResource(modelName, modelName)
+        })
+      } else {
+        await this.createResource(name, slug)
+      }
     } catch ({ message }) {
       this.error(message)
     }
