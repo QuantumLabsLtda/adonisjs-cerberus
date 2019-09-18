@@ -81,14 +81,17 @@ class ResourceCommand extends Command {
         models = models.filter((val) => val.split('.')[1] === 'js')
 
         await asyncForEach((models), async (model) => {
-          const modelName = model.split('.')[0]
+          const name = model.split('.')[0]
+          const slug = name.toLowerCase()
 
-          await this.createResource(modelName, modelName)
+          await this.createResource(name, slug)
         })
       } else {
         await this.createResource(name, slug)
       }
     } catch ({ message }) {
+      // Close Databse connection
+      Database.close()
       this.error(message)
     }
   }
