@@ -19,7 +19,13 @@ class ResourceCommand extends Command {
    * @return {String}
    */
   static get signature () {
-    return 'cerberus:resource { name?: Name of the resource } { slug?: Short name for resource } { --from-models: Create a resource for each Model }'
+    return `
+        cerberus:resource
+        { name?: Name of the resource }
+        { slug?: Short name for resource }
+        { --from-models: Create a resource for each Model }
+        { --from-controllers: Create a resource for each Controller }
+    `
   }
 
   /**
@@ -72,7 +78,7 @@ class ResourceCommand extends Command {
    *
    * @return {void}
    */
-  async handle ({ name, slug }, { fromModels }) {
+  async handle ({ name, slug }, { fromModels, fromControllers }) {
     try {
       if (fromModels) {
         // Read project models folder
@@ -86,6 +92,20 @@ class ResourceCommand extends Command {
           const slug = name
 
           // Create resource for each model
+          await this.createResource(name, slug)
+        })
+      } else if (fromControllers) {
+        // Read project http controllers folder
+        const controllersPath = path.join(Helpers.appRoot(), 'app/Controllers/Http')
+        let controllers = await fs.readdir(controllersPath)
+        controllers = controllers.filter((val) => val.split('.')[1] === 'js')
+
+        // Loop in controllers
+        await asyncForEach((controllers), async (controller) => {
+          const name = controller.split('Controller')[0]
+          const slug = name
+
+          // Create resource for each controller
           await this.createResource(name, slug)
         })
       } else {
