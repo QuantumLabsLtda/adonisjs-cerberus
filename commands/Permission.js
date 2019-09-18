@@ -1,12 +1,20 @@
+/* eslint-disable space-before-function-paren */
 /* eslint-disable no-unneeded-ternary */
 'use strict'
 
 const { Command } = require('@adonisjs/ace')
-const Permission = use('Cerberus/Models/Permission')
-const Role = use('Cerberus/Models/Role')
+const Permission = require('../src/Commands/BasePermission')
 const Database = use('Database')
 
 class PermissionCommand extends Command {
+  constructor() {
+    super()
+    // Init base permission
+    const permission = new Permission()
+    this.askPermissionParameters = permission.askPermissionParameters
+    this.createPermission = permission.createPermission
+  }
+
   /**
    * The command signature getter to define the
    * command name, arguments and options.
@@ -19,7 +27,7 @@ class PermissionCommand extends Command {
   static get signature () {
     return `
         cerberus:permission
-        { name: Name of the resource }
+        { --resource-name=@value: Name of the resource }
     `
   }
 
@@ -46,11 +54,11 @@ class PermissionCommand extends Command {
    *
    * @return {void}
    */
-  async handle ({ name }) {
+  async handle ({ resourceName }) {
     try {
       // Ask for permission parameters
       await this.askPermissionParameters(true)
-      await this.createPermission({ resourceName: name })
+      await this.createPermission({ resourceName })
 
       await Database.close()
     } catch ({ message }) {
