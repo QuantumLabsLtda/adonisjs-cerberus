@@ -6,7 +6,7 @@ const Database = use('Database')
 const Helpers = use('Helpers')
 const fs = Helpers.promisify(require('fs'))
 const path = require('path')
-const { asyncForEach } = require('../util/Util')
+const { asyncForEach, camelize } = require('../util/Util')
 
 class ResourceCommand extends Command {
   /**
@@ -50,7 +50,7 @@ class ResourceCommand extends Command {
 
     await Database.transaction(async (trx) => {
       // Create the resource
-      await Resource.create({ name, slug }, trx)
+      await Resource.create({ name, slug: camelize(slug) }, trx)
     })
 
     this.success(`${this.icon('success')} resource ${name} created.`)
@@ -82,7 +82,7 @@ class ResourceCommand extends Command {
 
         await asyncForEach((models), async (model) => {
           const name = model.split('.')[0]
-          const slug = name.toLowerCase()
+          const slug = name
 
           await this.createResource(name, slug)
         })

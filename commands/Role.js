@@ -3,6 +3,7 @@
 const { Command } = require('@adonisjs/ace')
 const Role = use('Cerberus/Models/Role')
 const Database = use('Database')
+const { camelize } = require('../util/Util')
 
 class RoleCommand extends Command {
   /**
@@ -48,7 +49,7 @@ class RoleCommand extends Command {
 
       await Database.transaction(async (trx) => {
         // Create the role
-        await Role.create({ name, slug }, trx)
+        await Role.create({ name, slug: camelize(slug) }, trx)
       })
 
       this.success(`${this.icon('success')} role ${name} created.`)
