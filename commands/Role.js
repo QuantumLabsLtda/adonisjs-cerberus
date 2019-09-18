@@ -4,7 +4,7 @@ const { Command } = require('@adonisjs/ace')
 const Role = use('Cerberus/Models/Role')
 const Database = use('Database')
 
-class SetupCommand extends Command {
+class RoleCommand extends Command {
   /**
    * The command signature getter to define the
    * command name, arguments and options.
@@ -61,4 +61,4 @@ class SetupCommand extends Command {
   }
 }
 
-module.exports = SetupCommand
+module.exports = RoleCommand
