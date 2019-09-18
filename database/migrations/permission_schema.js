@@ -20,7 +20,6 @@ class RoleSchema extends Schema {
         .references('id')
         .inTable('roles')
         .notNullable()
-        .unique()
       table.boolean('create').notNullable().defaultTo(true)
       table.boolean('read').notNullable().defaultTo(true)
       table.boolean('update').notNullable().defaultTo(true)
