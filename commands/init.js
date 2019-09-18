@@ -70,6 +70,7 @@ class SetupCommand extends Command {
       await this.createMigration('role_schema')
       await this.createMigration('resource_schema')
       await this.createMigration('permission_schema')
+      await this.createMigration('user_schema')
     } catch ({ message }) {
       this.error(message)
     }
