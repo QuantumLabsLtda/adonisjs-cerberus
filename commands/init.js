@@ -67,8 +67,8 @@ class SetupCommand extends Command {
    */
   async handle () {
     try {
-      await this.createMigration('resource_schema')
       await this.createMigration('role_schema')
+      await this.createMigration('resource_schema')
       await this.createMigration('permission_schema')
     } catch ({ message }) {
       this.error(message)
