@@ -48,7 +48,7 @@ class RoleCommand extends Command {
 
       await Database.transaction(async (trx) => {
         // Create the role
-        await Role.create({ name, slug })
+        await Role.create({ name, slug }, trx)
       })
 
       this.success(`${this.icon('success')} role ${name} created.`)

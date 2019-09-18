@@ -50,13 +50,13 @@ class ResourceCommand extends Command {
 
     await Database.transaction(async (trx) => {
       // Create the resource
-      await Resource.create({ name, slug })
+      await Resource.create({ name, slug }, trx)
     })
 
     this.success(`${this.icon('success')} resource ${name} created.`)
 
     // Close Databse connection
-    await Database.close()
+    Database.close()
 
     return true
   }
