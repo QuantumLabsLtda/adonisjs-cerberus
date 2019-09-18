@@ -1,4 +1,6 @@
+/* eslint-disable no-unneeded-ternary */
 const Permission = use('Cerberus/Models/Permission')
+const Resource = use('Cerberus/Models/Resource')
 const Role = use('Cerberus/Models/Role')
 const Database = use('Database')
 
@@ -71,7 +73,7 @@ class BasePermission {
     }
 
     // Check if resource exists
-    const resource = await Permission.findBy('name', resourceName)
+    const resource = await Resource.findBy('name', resourceName)
     if (!resource) {
       Database.close()
       return this.error('Permission not found')
