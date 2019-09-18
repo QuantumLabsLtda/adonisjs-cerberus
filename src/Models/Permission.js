@@ -9,7 +9,7 @@ class Permission extends Model {
   }
 
   resource () {
-    return this.belongsTo('Cerberus/Models/Resource')
+    return this.hasOne('Cerberus/Models/Resource')
   }
 }
 

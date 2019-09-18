@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class Resource extends Model {
   permission () {
-    return this.hasOne('Cerberus/Models/Permission')
+    return this.belongsTo('Cerberus/Models/Permission')
   }
 }
 
