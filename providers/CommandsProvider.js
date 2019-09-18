@@ -4,7 +4,7 @@ const { ServiceProvider } = require('@adonisjs/fold')
 
 class CommandsProvider extends ServiceProvider {
   register () {
-    this.app.bind('Adonis/Commands/cerberus:init', () => require('../commands/setup'))
+    this.app.bind('Adonis/Commands/cerberus:init', () => require('../commands/init'))
   }
 
   boot () {
