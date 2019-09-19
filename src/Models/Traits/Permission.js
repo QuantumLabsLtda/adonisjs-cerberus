@@ -3,14 +3,12 @@ const Config = use('Config')
 const Resource = use('Cerberus/Models/Resource')
 const usingSnakeCaseMappers = Config.get('database.usingSnakeCaseMappers')
 const RESOURCE_ID = ((usingSnakeCaseMappers) ? 'resourceId' : 'resource_id')
+const ROLE_ID = ((usingSnakeCaseMappers) ? 'roleId' : 'role_id')
 
 module.exports = class Permission {
   register (Model) {
-    Model.prototype.permissions = async function () {
-      const role = await this.role().fetch()
-      const permissions = await role.permissions()
-
-      return permissions
+    Model.prototype.permissions = function () {
+      return this.hasMany('Cerberus/Models/Permission', ROLE_ID, ROLE_ID)
     }
 
     Model.prototype.getResourcePermissions = async function (slug) {
