@@ -2,14 +2,20 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const Config = use('Config')
+const usingSnakeCaseMappers = Config.get('database.usingSnakeCaseMappers')
 
 class Permission extends Model {
   role () {
-    return this.belongsTo('Cerberus/Models/Role')
+    const ROLE_ID = ((usingSnakeCaseMappers) ? 'roleId' : 'role_id')
+
+    return this.belongsTo('Cerberus/Models/Role', ROLE_ID, 'id')
   }
 
   resource () {
-    return this.hasOne('Cerberus/Models/Resource')
+    const RESOURCE_ID = ((usingSnakeCaseMappers) ? 'resourceId' : 'resource_id')
+
+    return this.belongsTo('Cerberus/Models/Resource', RESOURCE_ID, 'id')
   }
 }
 

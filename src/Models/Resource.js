@@ -2,10 +2,14 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const Config = use('Config')
+const usingSnakeCaseMappers = Config.get('database.usingSnakeCaseMappers')
 
 class Resource extends Model {
-  permission () {
-    return this.belongsTo('Cerberus/Models/Permission')
+  permissions () {
+    const RESOURCE_ID = ((usingSnakeCaseMappers) ? 'resourceId' : 'resource_id')
+
+    return this.hasMany('Cerberus/Models/Permission', 'id', RESOURCE_ID)
   }
 }
 
