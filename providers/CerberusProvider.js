@@ -41,6 +41,11 @@ class AclProvider extends ServiceProvider {
       const PermissionException = require('../src/Exceptions/PermissionException')
       return PermissionException
     })
+
+    this.app.bind('Cerberus/Exceptions/ResourceNotFoundException', () => {
+      const ResourceNotFoundException = require('../src/Exceptions/ResourceNotFoundException')
+      return ResourceNotFoundException
+    })
   }
 
   boot () { }

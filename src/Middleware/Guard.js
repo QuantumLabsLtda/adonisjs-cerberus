@@ -3,6 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const PermissionException = use('Cerberus/Exceptions/PermissionException')
+const ResourceNotFoundException = use('Cerberus/Exceptions/ResourceNotFoundException')
 const User = use('App/Models/User')
 const Resource = use('Cerberus/Models/Resource')
 const Config = use('Config')
@@ -25,6 +26,13 @@ class Guard {
 
     // List requested resources
     const resources = await Resource.query().whereIn('slug', neededPermissions.resourceNames).fetch()
+
+    // Throw exception if not found
+    if (resources.rows.length <= 0) {
+      throw new ResourceNotFoundException()
+    }
+
+    // Maps the resources ids
     const resourceIds = resources.rows.map((val) => val.id)
 
     // Get user permissions
