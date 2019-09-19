@@ -31,6 +31,11 @@ class AclProvider extends ServiceProvider {
       const Permission = require('../src/Models/Traits/Permission')
       return new Permission()
     })
+
+    this.app.bind('Cerberus/Middleware/Guard', () => {
+      const Guard = require('../src/Middleware/Guard')
+      return new Guard()
+    })
   }
 
   boot () { }
