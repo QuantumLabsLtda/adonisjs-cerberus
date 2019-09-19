@@ -2,6 +2,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+const PermissionException = use('Cerberus/Exceptions/PermissionException')
 const User = use('App/Models/User')
 const Resource = use('Cerberus/Models/Resource')
 const Config = use('Config')
@@ -33,7 +34,7 @@ class Guard {
     const allowed = await Cerberus.checkPermissions(neededPermissions, userPermissions, resources)
 
     if (!allowed) {
-      return response.status(401).send({ error: 'Acess denied.' })
+      throw new PermissionException()
     }
 
     // call next to advance the request
