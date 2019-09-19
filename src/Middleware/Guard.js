@@ -29,7 +29,7 @@ class Guard {
 
     // Throw exception if not found
     if (resources.rows.length <= 0) {
-      throw new ResourceNotFoundException()
+      throw new ResourceNotFoundException(neededPermissions.resourceNames)
     }
 
     // Maps the resources ids
