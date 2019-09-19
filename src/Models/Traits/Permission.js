@@ -16,7 +16,7 @@ module.exports = class Permission {
     Model.prototype.getResourcePermissions = async function (slug) {
       const resource = await Resource.findByOrFail('slug', slug)
 
-      const permissions = await this.permissions.where(RESOURCE_ID, resource.id).fetch()
+      const permissions = await this.permissions().where(RESOURCE_ID, resource.id).fetch()
 
       return permissions
     }
