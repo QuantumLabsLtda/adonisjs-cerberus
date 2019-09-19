@@ -36,6 +36,11 @@ class AclProvider extends ServiceProvider {
       const Guard = require('../src/Middleware/Guard')
       return new Guard()
     })
+
+    this.app.bind('Cerberus/Exceptions/PermissionException', () => {
+      const PermissionException = require('../src/Exceptions/PermissionException')
+      return new PermissionException()
+    })
   }
 
   boot () { }
