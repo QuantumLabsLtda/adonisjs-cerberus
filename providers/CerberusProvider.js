@@ -39,7 +39,7 @@ class AclProvider extends ServiceProvider {
 
     this.app.bind('Cerberus/Exceptions/PermissionException', () => {
       const PermissionException = require('../src/Exceptions/PermissionException')
-      return new PermissionException()
+      return PermissionException
     })
   }
 
