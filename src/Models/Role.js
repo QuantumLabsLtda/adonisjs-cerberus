@@ -4,16 +4,15 @@
 const Model = use('Model')
 const Config = use('Config')
 const usingSnakeCaseMappers = Config.get('database.usingSnakeCaseMappers')
+const ROLE_ID = ((usingSnakeCaseMappers) ? 'roleId' : 'role_id')
 
 class Role extends Model {
   permissions () {
-    const ROLE_ID = ((usingSnakeCaseMappers) ? 'roleId' : 'role_id')
-
     return this.hasMany('Cerberus/Models/Permission', 'id', ROLE_ID)
   }
 
   user () {
-    return this.belongsTo('App/Models/User')
+    return this.belongsTo('App/Models/User', 'id', ROLE_ID)
   }
 }
 
