@@ -33,14 +33,14 @@ class Cerberus {
     // Maps the needed permission resources, adding the resource id for comparision
     neededPermissions.resources = neededPermissions.resources.map((val) => {
       return {
-        id: (resources.filter((resource) => val.slug === resource.slug))[0].id,
+        id: (resources.rows.filter((resource) => val.slug === resource.slug))[0].id,
         ...val
       }
     })
 
     // Check if user has permissions
     await asyncForEach(neededPermissions.resources, async (resource) => {
-      const permission = userPermissions.filter((permission) => permission[RESOURCE_ID] === resource.id)[0]
+      const permission = userPermissions.rows.filter((permission) => permission[RESOURCE_ID] === resource.id)[0]
 
       // Turn allowed false if has no permission
       if (!permission[resource.permission]) allowed = false
