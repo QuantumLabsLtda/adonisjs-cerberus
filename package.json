@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gustavo Andrade <gustavo@quantumlabs.com.br>",
-  "license": "MIT",
+  "license": "BSD",
   "devDependencies": {
     "@adonisjs/ace": "^5.0.8",
     "@adonisjs/fold": "^4.0.9",
