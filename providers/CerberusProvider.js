@@ -26,6 +26,11 @@ class AclProvider extends ServiceProvider {
       const Role = require('../src/Models/Traits/Role')
       return new Role()
     })
+
+    this.app.bind('Cerberus/Traits/Permission', () => {
+      const Permission = require('../src/Models/Traits/Permission')
+      return new Permission()
+    })
   }
 
   boot () { }
