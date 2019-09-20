@@ -1,5 +1,5 @@
 {
-  "name": "adonisjs-cerberus",
+  "name": "@quantumlabs/adonisjs-cerberus",
   "version": "1.0.0",
   "description": "Adonis roles and permissions provider",
   "main": "index.js",
