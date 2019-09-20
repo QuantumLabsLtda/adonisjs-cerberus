@@ -242,7 +242,7 @@ By default, Cerberus throw 2 types of errors:
 You can handle this errors manually for custom messages. Check [Adonis Framework Official Docs](https://adonisjs.com/docs/4.1/) and search for [Error Handling](https://adonisjs.com/docs/4.1/exceptions).
 
 ## Todo
-- [ ] Add an option in `cerberus:resource` to run permission for every resource in database
+- [x] Add an option in `adonis cerberus:permission` to run permission for every resource in database
 - [ ] Option to create custom permission rights
 
 ## Credits
