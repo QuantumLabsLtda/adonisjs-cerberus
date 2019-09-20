@@ -1,6 +1,11 @@
+/**
+ * Adonisjs Cerberus
+ * Copyright(c) 2019 Quantum Labs Ltda.
+ * BSD 3-Clause Licensed
+ */
+
 /* eslint-disable space-before-function-paren */
 const { LogicalException } = require('@adonisjs/generic-exceptions')
-const Config = use('Config')
 
 class PermissionException extends LogicalException {
   constructor() {

@@ -1,3 +1,9 @@
+/**
+ * Adonisjs Cerberus
+ * Copyright(c) 2019 Quantum Labs Ltda.
+ * BSD 3-Clause Licensed
+ */
+
 /* eslint-disable no-unused-vars */
 'use strict'
 const Config = use('Config')

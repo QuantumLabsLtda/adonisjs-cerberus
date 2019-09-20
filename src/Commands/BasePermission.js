@@ -1,3 +1,9 @@
+/**
+ * Adonisjs Cerberus
+ * Copyright(c) 2019 Quantum Labs Ltda.
+ * BSD 3-Clause Licensed
+ */
+
 /* eslint-disable no-unneeded-ternary */
 const Permission = use('Cerberus/Models/Permission')
 const Resource = use('Cerberus/Models/Resource')

@@ -1,5 +1,5 @@
 {
-  "name": "@quantumlabs/adonisjs-cerberus",
+  "name": "adonisjs-cerberus",
   "version": "1.0.0",
   "description": "Adonis roles and permissions provider",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gustavo Andrade <gustavo@quantumlabs.com.br>",
-  "license": "BSD",
+  "license": "BSD 3-Clause",
   "devDependencies": {
     "@adonisjs/ace": "^5.0.8",
     "@adonisjs/fold": "^4.0.9",
@@ -16,11 +16,6 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
-    "japa": "^3.0.1",
-    "japa-cli": "^1.0.1"
-  },
-  "dependencies": {
-    "sharp": "^0.23.0"
+    "eslint-plugin-standard": "^4.0.1"
   }
 }

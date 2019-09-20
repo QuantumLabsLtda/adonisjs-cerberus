@@ -1,3 +1,8 @@
+/**
+ * Adonisjs Cerberus
+ * Copyright(c) 2019 Quantum Labs Ltda.
+ * BSD 3-Clause Licensed
+ */
 'use strict'
 
 const { Command } = require('@adonisjs/ace')

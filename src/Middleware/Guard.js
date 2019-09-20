@@ -1,3 +1,9 @@
+/**
+ * Adonisjs Cerberus
+ * Copyright(c) 2019 Quantum Labs Ltda.
+ * BSD 3-Clause Licensed
+ */
+
 'use strict'
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
