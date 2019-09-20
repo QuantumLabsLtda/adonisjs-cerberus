@@ -69,13 +69,20 @@ This command will copy all library specific migrations into your project `migrat
 
 As mentioned before, this command should (and we hope it will) copy all library specific migrations into your project `migrations` folder. There's no special flags or parameters for this command.
 
-#### Permission
+#### Role
 
 ```shell
-  adonis cerberus:permission --resource-name <value>
+adonis cerberus:role [name] [slug]
+
+Usage:
+  cerberus:role <name> [slug] [options]
+
+Arguments:
+  name   Name of the role
+  slug   Short name for role
 ```
 
-This command create a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
+This command create a new *role* into roles table. You only need to specify the `name` of *role*, `slug` argument is optional.
 
 #### Resource
 
@@ -100,20 +107,13 @@ The options are:
   `--from-models` - Generate a resource for each app Model
   `--from-controllers` - Generate a resource for each app Controller
 
-#### Role
+#### Permission
 
 ```shell
-adonis cerberus:role [name] [slug]
-
-Usage:
-  cerberus:role <name> [slug] [options]
-
-Arguments:
-  name   Name of the role
-  slug   Short name for role
+  adonis cerberus:permission --resource-name <value>
 ```
 
-This command create a new *role* into roles table. You only need to specify the `name` of *role*, `slug` argument is optional.
+This command create a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
 
 ## Usage
 
