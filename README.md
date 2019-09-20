@@ -232,11 +232,14 @@ Route
 
 By default, Cerberus throw 2 types of errors:
 
-## Todo
-[] - Add an option in `cerberus:resource` to run permission for every resource in database
-[] - Option to create custom permission rights
-
 1. `CERBERUS_ACCESS_DENIED`: This error occours when an *User* doesn't have the needed permissions for the specified *Resource*. The error *status code* is `403`.
 2. `CERBERUS_RESOURCE_NOT_FOUND`: This error occours when you're trying to check for *permissions* in a *Resource* that doesn't exist. The error *status code* is `404`.
 
 You can handle this errors manually for custom messages. Check [Adonis Framework Official Docs](https://adonisjs.com/docs/4.1/) and search for [Error Handling](https://adonisjs.com/docs/4.1/exceptions).
+
+## Todo
+- [] Add an option in `cerberus:resource` to run permission for every resource in database
+- [] Option to create custom permission rights
+
+## Credits
+Logo icon made by [freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com). Customized by QuantumLabs.
