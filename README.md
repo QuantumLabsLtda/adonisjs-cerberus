@@ -232,6 +232,10 @@ Route
 
 By default, Cerberus throw 2 types of errors:
 
+## Todo
+[] - Add an option in `cerberus:resource` to run permission for every resource in database
+[] - Option to create custom permission rights
+
 1. `CERBERUS_ACCESS_DENIED`: This error occours when an *User* doesn't have the needed permissions for the specified *Resource*. The error *status code* is `403`.
 2. `CERBERUS_RESOURCE_NOT_FOUND`: This error occours when you're trying to check for *permissions* in a *Resource* that doesn't exist. The error *status code* is `404`.
 
