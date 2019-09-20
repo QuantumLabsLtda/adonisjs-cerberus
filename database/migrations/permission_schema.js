@@ -13,7 +13,6 @@ class RoleSchema extends Schema {
         .references('id')
         .inTable('resources')
         .notNullable()
-        .unique()
       table
         .integer('role_id')
         .unsigned()
