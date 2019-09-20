@@ -11,6 +11,8 @@
 const { Command } = require('@adonisjs/ace')
 const Permission = require('../src/Commands/BasePermission')
 const Database = use('Database')
+const Resource = use('Cerberus/Models/Resource')
+const { asyncForEach } = require('../util/Util')
 
 class PermissionCommand extends Command {
   constructor() {
@@ -33,7 +35,8 @@ class PermissionCommand extends Command {
   static get signature () {
     return `
         cerberus:permission
-        { --resource-name=@value: Name of the resource }
+        { -a, --all: Run permission creation for each Resource in database }
+        { --resource-name=@value: Name of resource }
     `
   }
 
@@ -60,11 +63,22 @@ class PermissionCommand extends Command {
    *
    * @return {void}
    */
-  async handle (args, { resourceName }) {
+  async handle (args, { resourceName, all }) {
     try {
-      // Ask for permission parameters
-      await this.askPermissionParameters(true, resourceName)
-      await this.createPermission({ resourceName: resourceName })
+      if (all) {
+        // Fetch all Resources in database
+        const resources = await Resource.all()
+        // Loop in each Resource, creating a permission
+        await asyncForEach(resources.rows, async (resource) => {
+          // Ask for permission parameters
+          await this.askPermissionParameters(true, resource.name)
+          await this.createPermission({ resourceName: resource.name })
+        })
+      } else {
+        // Ask for permission parameters
+        await this.askPermissionParameters(true, resourceName)
+        await this.createPermission({ resourceName: resourceName })
+      }
 
       await Database.close()
     } catch ({ message }) {

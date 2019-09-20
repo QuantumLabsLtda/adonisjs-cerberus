@@ -181,7 +181,11 @@ The options are:
 #### Permission
 
 ```shell
-  adonis cerberus:permission --resource-name <value>
+cerberus:permission [options]
+
+Options:
+  -a, --all               Run permission creation for each Resource in database
+  --resource-name <value> Name of resource
 ```
 
 This command create a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
