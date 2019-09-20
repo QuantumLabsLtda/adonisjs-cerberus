@@ -41,10 +41,10 @@ class ResourceCommand extends Command {
   static get signature () {
     return `
         cerberus:resource
-        { name?: Name of the resource }
+        { name?: Name of resource }
         { slug?: Short name for resource }
         { -p, --permission: Generate permissions }
-        { -a, --always-ask: Ask which permissions give in each Resource once (false by default)}
+        { -a, --always-ask: Ask which permissions give for each Resource (false by default)}
         { --from-models: Generate a resource for each app Model }
         { --from-controllers: Generate a resource for each app Controller }
     `
