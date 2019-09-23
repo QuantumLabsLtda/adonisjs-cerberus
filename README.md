@@ -15,7 +15,12 @@ Cerberus is a library that adds roles, resources and permissions to [Auth System
 - [Setup](#setup)
 - [Instructions](#instructions)
 - [Usage](#usage)
-
+  - [Using in routes](#using-in-routes)
+  - [Consuming Models](#consuming-models)
+    - [Roles](#roles)
+    - [Resources](#resources)
+    - [Permissions](#permissions)
+    - [Binding User to Role](#binding-user-to-role)
 - [Commands](#commands)
   - [Init](#init)
   - [Permission](#permission)  
@@ -50,7 +55,7 @@ Then, you can create **Roles** and give **Permissions** to specific **Resources*
 ## Tables diagram
 
 <p align="center">
-<img src="https://i.imgur.com/NmeHECR.png" alt="Cerberus" title="Cerberus" align="center"/>
+<img src="https://i.imgur.com/6urqQFn.png" alt="Cerberus" title="Cerberus" align="center"/>
 </p>
 
 ## Setup
@@ -130,6 +135,8 @@ class User extends Model {
 
 This command will copy all library specific migrations into your project `migrations` folder.
 
+*Warning*: Cerberus creates a migration for `users` table, adding a `role_id` column, which is a foreing key from `roles`. You **should** take a look in the migration before running it in production!
+
 ## Commands
 
 #### Init
@@ -192,6 +199,8 @@ This command create a new *permission* into permissions table. You need to speci
 
 ## Usage
 
+## Using in routes
+
 After creating your *Permissions*, you'll be able to start using **Guard** middleware in your routes.
 
 It's simple to bind a permission into a route, look:
@@ -232,6 +241,99 @@ Route
 
 *Warning*: You need to add the default `auth` middleware **before** Cerberus `guard`!
 
+### Consuming Models
+
+You can use the Cerberus Models to create *Roles*, *Resources* and *Permissions* in your own code, for creating seeds or a CRUD to manage Cerberus stuff. It's simple:
+
+#### Roles
+
+```js
+  const Role = use('Cerberus/Models/Role')
+
+  // Creating a new Role
+  await Role.create({
+    name: 'Jedi Master',
+    slug: 'jedi'
+  })
+
+  // or
+
+  let role = await Role.find(1)
+
+  role.name = 'Wookie'
+  role.slug = 'wookie'
+
+  await role.save()
+
+  // You can use any Lucid methods you want
+```
+
+#### Resources
+
+```js
+  const Resource = use('Cerberus/Models/Resource')
+
+  // Creating a new Resource
+  await Resource.create({
+    name: 'Lightsaber',
+    slug: 'lightsaber'
+  })
+
+  // or
+
+  let resource = await Resource.find(1)
+
+  resource.name = 'Force'
+  resource.slug = 'force'
+
+  await resource.save()
+
+  // You can use any Lucid methods you want
+```
+
+#### Permissions
+
+```js
+  const Permission = use('Cerberus/Models/Permission')
+
+  // Creating a new Permission
+  await Permission.create({
+    role_id: role.id,
+    resource_id: resource.id,
+    create: false,
+    read: true,
+    update: false,
+    delete: false
+  })
+
+  // or
+
+  let permission = await Permission.find(1)
+
+  permission.create = true
+  permission.update = true
+
+  await permission.save()
+
+  // You can use any Lucid methods you want
+```
+
+#### Binding User to Role
+
+You can simply bind an existing **User** to a **Role**:
+
+```js
+  const User = use('App/Models/User')
+  
+  // Fetches the current user
+  let user = await User.find(1)
+
+  // Set the role Id
+  user.role_id = 1
+
+  await user.save()
+```
+
 ## Errors
 
 By default, Cerberus throw 2 types of errors:
@@ -242,8 +344,10 @@ By default, Cerberus throw 2 types of errors:
 You can handle this errors manually for custom messages. Check [Adonis Framework Official Docs](https://adonisjs.com/docs/4.1/) and search for [Error Handling](https://adonisjs.com/docs/4.1/exceptions).
 
 ## Todo
+
 - [x] Add an option in `adonis cerberus:permission` to run permission for every resource in database
 - [ ] Option to create custom permission rights
+- [ ] Methods for easy permission, role and resource binding
 
 ## Credits
 Logo icon made by [freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com). Customized by QuantumLabs.
