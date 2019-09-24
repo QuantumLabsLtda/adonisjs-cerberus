@@ -6,6 +6,8 @@
 
 > A Hellhound that protects your API Endpoints... 😈
 
+[![npm version](https://badge.fury.io/js/%40quantumlabs%2Fadonisjs-cerberus.svg)](https://badge.fury.io/js/%40quantumlabs%2Fadonisjs-cerberus)
+
 Cerberus is a library that adds roles, resources and permissions to [Auth System](https://github.com/adonisjs/adonis-auth) from [Adonis Framework](https://github.com/adonisjs/adonis-framework).
 
 ### Table of Contents
