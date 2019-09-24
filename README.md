@@ -350,6 +350,7 @@ You can handle this errors manually for custom messages. Check [Adonis Framework
 - [x] Add an option in `adonis cerberus:permission` to run permission for every resource in database
 - [ ] Option to create custom permission rights
 - [ ] Methods for easy permission, role and resource binding
+- [ ] Setting a test utility and write tests for the existing code
 
 ## Credits
 Logo icon made by [freepik](https://www.flaticon.com/authors/freepik) from [flaticon.com](https://www.flaticon.com). Customized by QuantumLabs.
