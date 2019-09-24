@@ -7,8 +7,8 @@ class ResourceSchema extends Schema {
   up () {
     this.create('resources', (table) => {
       table.increments()
-      table.string('slug').notNullable().unique()
       table.string('name').notNullable().unique()
+      table.string('slug').notNullable().unique()
       table.timestamps()
     })
   }
