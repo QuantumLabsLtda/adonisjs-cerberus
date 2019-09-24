@@ -25,7 +25,7 @@ class Cerberus {
 
       resources = resources.push({ slug: resource, permission: permission })
 
-      if (resourceNames.includes(resource) === false) resourceNames.push(resource)
+      if (!resourceNames.includes(resource)) resourceNames.push(resource)
 
       return previous
     }, { resources: [], resourceNames: [] })
