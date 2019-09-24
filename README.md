@@ -147,7 +147,7 @@ This command will copy all library specific migrations into your project `migrat
   adonis cerberus:init
 ```
 
-As mentioned before, this command should (and we hope it will) copy all library specific migrations into your project `migrations` folder. There's no special flags or parameters for this command.
+As mentioned before, this command should (and we hope it will) copy all library specific migration into your projects `migrations` folder. There's no special flags or parameters for this command.
 
 #### Role
 
