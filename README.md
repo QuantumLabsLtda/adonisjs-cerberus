@@ -162,7 +162,7 @@ Arguments:
   slug   Short name for role
 ```
 
-This command create a new *role* into roles table. You only need to specify the `name` of *role*, `slug` argument is optional.
+This command creates a new *role* into roles table. You only need to specify the `name` of *role*, `slug` argument is optional.
 
 #### Resource
 
@@ -180,7 +180,7 @@ Options:
   --from-controllers Generate a resource for each app Controller
 ```
 
-This command create a new *resource* into resources table. You only need to specify the `name` of resource, `slug` argument is optional.
+This command creates a new *resource* into resources table. You only need to specify the `name` of resource, `slug` argument is optional.
 The options are:
   `-p, --permission` - Generate permissions
   `-a, --always-ask` - Ask which permissions give in each Resource once (false by default)
@@ -197,7 +197,7 @@ Options:
   --resource-name <value> Name of resource
 ```
 
-This command create a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
+This command creates a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
 
 ## Usage
 
