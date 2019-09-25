@@ -30,6 +30,7 @@ Cerberus is a library that adds roles, resources and permissions to [Auth System
   - [Role](#role)  
 
 - [Errors](#errors)
+- [Tips](#tips)
 
 ## Concept
 
@@ -344,6 +345,10 @@ By default, Cerberus throw 2 types of errors:
 2. `CERBERUS_RESOURCE_NOT_FOUND`: This error occours when you're trying to check for *permissions* in a *Resource* that doesn't exist. The error *status code* is `404`.
 
 You can handle this errors manually for custom messages. Check [Adonis Framework Official Docs](https://adonisjs.com/docs/4.1/) and search for [Error Handling](https://adonisjs.com/docs/4.1/exceptions).
+
+## Tips
+
+**SQLite** - If you're using SQLite, you may notice a bug when running `user` migrations. This happens because SQLite doesn't support `ALTER TABLE` with a constraint. [Here](https://www.sqlite.org/omitted.html) you can find info about this issue in SQLite's [official docs](https://www.sqlite.org/docs.html). I suggest you to create `role_id` foreign key manually in your `user` migration.
 
 ## Todo
 
