@@ -3,13 +3,16 @@
   "version": "1.1.0",
   "description": "Adonis roles and permissions provider",
   "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node japaFile.js"
   },
   "author": "Gustavo Andrade <gustavo@quantumlabs.com.br>",
   "license": "BSD 3-Clause",
   "devDependencies": {
-    "@adonisjs/ace": "^5.0.8",
+    "@adonisjs/ace": "^6.1.6",
     "@adonisjs/fold": "^4.0.9",
     "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.4.0",
@@ -17,7 +20,10 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "japa": "^3.0.1",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
   },
   "config": {
     "commitizen": {
