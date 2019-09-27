@@ -46,7 +46,8 @@ class Cerberus {
 
     // Check if user has permissions
     await asyncForEach(neededPermissions.resources, async (resource) => {
-      const permission = userPermissions.rows.filter((permission) => permission[RESOURCE_ID] === resource.id)[0]
+      let permission = userPermissions.rows.filter((permission) => permission[RESOURCE_ID] === resource.id)[0]
+      permission = permission.toJSON()
 
       // Turn allowed false if has no permission
       if (!permission[resource.permission]) allowed = false
