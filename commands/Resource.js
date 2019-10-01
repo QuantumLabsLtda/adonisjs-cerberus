@@ -13,9 +13,9 @@ const Resource = use('Cerberus/Models/Resource')
 const Permission = require('../src/Commands/BasePermission')
 const Database = use('Database')
 const Helpers = use('Helpers')
-const fs = Helpers.promisify(require('fs'))
 const path = require('path')
 const { asyncForEach, camelize } = require('../util/Util')
+const recursive = require('recursive-readdir')
 
 class ResourceCommand extends Command {
   constructor() {
@@ -105,12 +105,13 @@ class ResourceCommand extends Command {
       if (fromModels) {
         // Read project models folder
         const modelsPath = path.join(Helpers.appRoot(), 'app/Models')
-        let models = await fs.readdir(modelsPath)
+        let models = await recursive(modelsPath, ['Hooks', 'Traits'])
         models = models.filter((val) => val.split('.')[1] === 'js')
 
         // Loop in models
         await asyncForEach((models), async (model) => {
-          const name = model.split('.')[0]
+          let name = model.split('.')[0].split('/')
+          name = name[(name.length - 1)]
           const slug = name
 
           // Ask for permission parameters
@@ -125,12 +126,13 @@ class ResourceCommand extends Command {
       } else if (fromControllers) {
         // Read project http controllers folder
         const controllersPath = path.join(Helpers.appRoot(), 'app/Controllers/Http')
-        let controllers = await fs.readdir(controllersPath)
+        let controllers = await recursive(controllersPath)
         controllers = controllers.filter((val) => val.split('.')[1] === 'js')
 
         // Loop in controllers
         await asyncForEach((controllers), async (controller) => {
-          const name = controller.split('Controller')[0]
+          let name = controller.split('Controller')[1].split('/')
+          name = name[(name.length - 1)]
           const slug = name
 
           // Ask for permission parameters
