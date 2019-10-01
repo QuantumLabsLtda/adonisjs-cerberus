@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/1.1.1...1.1.2) (2019-10-01)
+
+### Bug Fixes
+
+* **commands/resource.js:** add support to recursive folders in from models and controllers folder ([1b5de57](https://github.com/QuantumLabsLtda/adonisjs-cerberus/commit/1b5de57)), closes [#7](https://github.com/QuantumLabsLtda/adonisjs-cerberus/issues/7)
+
 ## [1.1.1](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/1.1.0...1.1.1) (2019-09-27)
 
 ### Bug Fixes
