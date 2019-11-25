@@ -10,7 +10,7 @@
 
 const { Command } = require('@adonisjs/ace')
 const Resource = use('Cerberus/Models/Resource')
-const DefaultPermission = require('../src/Commands/BasePermission')
+const DefaultPermission = require('../src/Commands/BaseDefaultPermission')
 const Database = use('Database')
 const Helpers = use('Helpers')
 const path = require('path')
@@ -43,7 +43,7 @@ class ResourceCommand extends Command {
         cerberus:resource
         { name?: Name of resource }
         { slug?: Short name for resource }
-        { -p, --permission: Generate default permission }
+        { -p, --defaultPermission: Generate default permission }
         { -a, --always-ask: Ask which default permissions give for each Resource (false by default)}
         { --from-models: Generate a resource for each app Model }
         { --from-controllers: Generate a resource for each app Controller }

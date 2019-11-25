@@ -9,18 +9,18 @@
 'use strict'
 
 const { Command } = require('@adonisjs/ace')
-const Permission = require('../src/Commands/BasePermission')
+const DefaultPermission = require('../src/Commands/BaseDefaultPermission')
 const Database = use('Database')
 const Resource = use('Cerberus/Models/Resource')
 const { asyncForEach } = require('../util/Util')
 
-class PermissionCommand extends Command {
+class DefaultPermissionCommand extends Command {
   constructor() {
     super()
-    // Init base permission
-    const permission = new Permission()
-    this.askPermissionParameters = permission.askPermissionParameters
-    this.createPermission = permission.createPermission
+    // Init base defaultPermission
+    const defaultPermission = new DefaultPermission()
+    this.askDefaultPermissionParameters = defaultPermission.askDefaultPermissionParameters
+    this.createDefaultPermission = defaultPermission.createDefaultPermission
   }
 
   /**
@@ -34,8 +34,8 @@ class PermissionCommand extends Command {
    */
   static get signature () {
     return `
-        cerberus:permission
-        { -a, --all: Run default permission creation for each Resource in database }
+        cerberus:defaultPermission
+        { -a, --all: Run default default permission creation for each Resource in database }
         { --resource-name=@value: Name of resource }
     `
   }
@@ -68,16 +68,16 @@ class PermissionCommand extends Command {
       if (all) {
         // Fetch all Resources in database
         const resources = await Resource.all()
-        // Loop in each Resource, creating a permission
+        // Loop in each Resource, creating a defaultPermission
         await asyncForEach(resources.rows, async (resource) => {
-          // Ask for permission parameters
-          await this.askPermissionParameters(true, resource.name)
-          await this.createPermission({ resourceName: resource.name })
+          // Ask for defaultPermission parameters
+          await this.askDefaultPermissionParameters(true, resource.name)
+          await this.createDefaultPermission({ resourceName: resource.name })
         })
       } else {
-        // Ask for permission parameters
-        await this.askPermissionParameters(true, resourceName)
-        await this.createPermission({ resourceName: resourceName })
+        // Ask for defaultPermission parameters
+        await this.askDefaultPermissionParameters(true, resourceName)
+        await this.createDefaultPermission({ resourceName: resourceName })
       }
 
       await Database.close()
@@ -89,4 +89,4 @@ class PermissionCommand extends Command {
   }
 }
 
-module.exports = PermissionCommand
+module.exports = DefaultPermissionCommand
