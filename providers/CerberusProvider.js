@@ -22,6 +22,12 @@ class AclProvider extends ServiceProvider {
       return Role
     })
 
+    this.app.bind('Cerberus/Models/DefaultPermission', () => {
+      const DefaultPermission = require('../src/Models/DefaultPermission')
+      DefaultPermission._bootIfNotBooted()
+      return DefaultPermission
+    })
+
     this.app.bind('Cerberus/Models/Permission', () => {
       const Permission = require('../src/Models/Permission')
       Permission._bootIfNotBooted()

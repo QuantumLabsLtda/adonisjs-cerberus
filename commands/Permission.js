@@ -35,7 +35,7 @@ class PermissionCommand extends Command {
   static get signature () {
     return `
         cerberus:permission
-        { -a, --all: Run permission creation for each Resource in database }
+        { -a, --all: Run default permission creation for each Resource in database }
         { --resource-name=@value: Name of resource }
     `
   }
@@ -49,7 +49,7 @@ class PermissionCommand extends Command {
    * @return {String}
    */
   static get description () {
-    return 'Create new Cerberus Permission'
+    return 'Create new Cerberus Default Permission'
   }
 
   /**

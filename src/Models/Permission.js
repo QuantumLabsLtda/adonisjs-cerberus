@@ -23,6 +23,12 @@ class Permission extends Model {
 
     return this.belongsTo('Cerberus/Models/Resource', RESOURCE_ID, 'id')
   }
+
+  user () {
+    const USER_ID = ((usingSnakeCaseMappers) ? 'userId' : 'user_id')
+
+    return this.belongsTo('App/Models/User', USER_ID, 'id')
+  }
 }
 
 module.exports = Permission

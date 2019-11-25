@@ -10,7 +10,7 @@
 
 const { Command } = require('@adonisjs/ace')
 const Resource = use('Cerberus/Models/Resource')
-const Permission = require('../src/Commands/BasePermission')
+const DefaultPermission = require('../src/Commands/BasePermission')
 const Database = use('Database')
 const Helpers = use('Helpers')
 const path = require('path')
@@ -21,12 +21,12 @@ class ResourceCommand extends Command {
   constructor() {
     super()
     this.roleSlug = null
-    this.permissionsArray = null
+    this.defaultPermissionsArray = null
 
-    // Init base permission
-    const permission = new Permission()
-    this.askPermissionParameters = permission.askPermissionParameters
-    this.createPermission = permission.createPermission
+    // Init base defaultPermission
+    const defaultPermission = new DefaultPermission()
+    this.askDefaultPermissionParameters = defaultPermission.askDefaultPermissionParameters
+    this.createDefaultPermission = defaultPermission.createDefaultPermission
   }
 
   /**
@@ -43,8 +43,8 @@ class ResourceCommand extends Command {
         cerberus:resource
         { name?: Name of resource }
         { slug?: Short name for resource }
-        { -p, --permission: Generate permissions }
-        { -a, --always-ask: Ask which permissions give for each Resource (false by default)}
+        { -p, --permission: Generate default permission }
+        { -a, --always-ask: Ask which default permissions give for each Resource (false by default)}
         { --from-models: Generate a resource for each app Model }
         { --from-controllers: Generate a resource for each app Controller }
     `
@@ -100,7 +100,7 @@ class ResourceCommand extends Command {
    *
    * @return {void}
    */
-  async handle ({ name, slug }, { fromModels, fromControllers, permission, alwaysAsk }) {
+  async handle ({ name, slug }, { fromModels, fromControllers, defaultPermission, alwaysAsk }) {
     try {
       if (fromModels) {
         // Read project models folder
@@ -114,14 +114,14 @@ class ResourceCommand extends Command {
           name = name[(name.length - 1)]
           const slug = name
 
-          // Ask for permission parameters
-          if (permission) await this.askPermissionParameters(alwaysAsk, name)
+          // Ask for defaultPermission parameters
+          if (defaultPermission) await this.askDefaultPermissionParameters(alwaysAsk, name)
 
           // Create resource for each model
           await this.createResource(name, slug)
 
-          // Create permission for each resource from model
-          if (permission) await this.createPermission({ resourceName: name })
+          // Create defaultPermission for each resource from model
+          if (defaultPermission) await this.createDefaultPermission({ resourceName: name })
         })
       } else if (fromControllers) {
         // Read project http controllers folder
@@ -135,20 +135,20 @@ class ResourceCommand extends Command {
           name = name[(name.length - 1)]
           const slug = name
 
-          // Ask for permission parameters
-          if (permission) await this.askPermissionParameters(alwaysAsk, name)
+          // Ask for defaultPermission parameters
+          if (defaultPermission) await this.askDefaultPermissionParameters(alwaysAsk, name)
 
           // Create resource for each controller
           await this.createResource(name, slug)
 
-          // Create permission for each resource from controller
-          if (permission) await this.createPermission({ resourceName: name })
+          // Create defaultPermission for each resource from controller
+          if (defaultPermission) await this.createDefaultPermission({ resourceName: name })
         })
       } else {
-        // Ask for permission parameters
-        if (permission) await this.askPermissionParameters(alwaysAsk)
+        // Ask for defaultPermission parameters
+        if (defaultPermission) await this.askDefaultPermissionParameters(alwaysAsk)
         await this.createResource(name, slug)
-        if (permission) await this.createPermission({ resourceName: name })
+        if (defaultPermission) await this.createDefaultPermission({ resourceName: name })
       }
 
       await Database.close()

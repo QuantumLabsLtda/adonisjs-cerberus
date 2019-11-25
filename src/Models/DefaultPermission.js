@@ -11,12 +11,18 @@ const Model = use('Model')
 const Config = use('Config')
 const usingSnakeCaseMappers = Config.get('database.usingSnakeCaseMappers')
 
-class Resource extends Model {
-  defaultPermissions () {
+class DefaultPermission extends Model {
+  role () {
+    const ROLE_ID = ((usingSnakeCaseMappers) ? 'roleId' : 'role_id')
+
+    return this.belongsTo('Cerberus/Models/Role', ROLE_ID, 'id')
+  }
+
+  resource () {
     const RESOURCE_ID = ((usingSnakeCaseMappers) ? 'resourceId' : 'resource_id')
 
-    return this.hasMany('Cerberus/Models/DefaultPermission', 'id', RESOURCE_ID)
+    return this.belongsTo('Cerberus/Models/Resource', RESOURCE_ID, 'id')
   }
 }
 
-module.exports = Resource
+module.exports = DefaultPermission

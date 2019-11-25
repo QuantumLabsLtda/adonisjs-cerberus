@@ -5,30 +5,30 @@
  */
 
 /* eslint-disable no-unneeded-ternary */
-const Permission = use('Cerberus/Models/Permission')
+const DefaultPermission = use('Cerberus/Models/DefaultPermission')
 const Resource = use('Cerberus/Models/Resource')
 const Role = use('Cerberus/Models/Role')
 const Database = use('Database')
 
-class BasePermission {
+class BaseDefaultPermission {
   /**
-  * Ask permission parameters
+  * Ask defaultPermission parameters
   *
-  * @method askPermissionParameters
+  * @method askDefaultPermissionParameters
   *
   * @param  {Function} alwaysAsk
   *
   * @return {void}
   */
-  async askPermissionParameters (alwaysAsk, resourceName) {
+  async askDefaultPermissionParameters (alwaysAsk, resourceName) {
     // Asks for role slug
     if (!this.roleSlug) {
       this.roleSlug = await this
-        .ask('Which role should I bind to this permission? (Use slug name)')
+        .ask('Which role should I bind to this defaultPermission? (Use slug name)')
     }
 
-    // Check if needs to always ask the permissions
-    if (alwaysAsk || !this.permissionsArray) {
+    // Check if needs to always ask the defaultPermissions
+    if (alwaysAsk || !this.defaultPermissionsArray) {
       let question = null
 
       if (alwaysAsk) {
@@ -37,7 +37,7 @@ class BasePermission {
         question = 'What this role can do with the resources? (a = select all, space = mark option)'
       }
 
-      this.permissionsArray = await this
+      this.defaultPermissionsArray = await this
         .multiple(question, [
           {
             name: 'Create',
@@ -58,19 +58,19 @@ class BasePermission {
         ])
     }
 
-    if (!alwaysAsk) this.warn('This will apply the same permissions to all resources. You can change it later 🤠')
+    if (!alwaysAsk) this.warn('This will apply the same default permissions to all resources. You can change it later 🤠')
   }
 
   /**
-   * Creates a permission
+   * Creates a defaultPermission
    *
-   * @method createPermission
+   * @method createDefaultPermission
    *
    * @param  {Object} resourceName
    *
    * @return {void}
    */
-  async createPermission ({ resourceName }) {
+  async createDefaultPermission ({ resourceName }) {
     // Check if role exists
     const role = await Role.findBy('slug', this.roleSlug)
     if (!role) {
@@ -85,23 +85,23 @@ class BasePermission {
       return this.error('Resource not found')
     }
 
-    // Function for permission checking
-    const hasPermission = (permission) => ((this.permissionsArray.find((el) => el === permission)) ? true : false)
+    // Function for defaultPermission checking
+    const hasDefaultPermission = (defaultPermission) => ((this.defaultPermissionsArray.find((el) => el === defaultPermission)) ? true : false)
 
-    // Create the permission
+    // Create the defaultPermission
     await Database.transaction(async (trx) => {
-      await Permission.create({
+      await DefaultPermission.create({
         role_id: role.id,
         resource_id: resource.id,
-        create: hasPermission('create'),
-        read: hasPermission('read'),
-        update: hasPermission('update'),
-        delete: hasPermission('delete')
+        create: hasDefaultPermission('create'),
+        read: hasDefaultPermission('read'),
+        update: hasDefaultPermission('update'),
+        delete: hasDefaultPermission('delete')
       }, trx)
     })
 
-    return this.info(`Permissions for ${resourceName} resource created successfully!`)
+    return this.info(`DefaultPermissions for ${resourceName} resource created successfully!`)
   }
 }
 
-module.exports = BasePermission
+module.exports = BaseDefaultPermission

@@ -3,9 +3,9 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class RoleSchema extends Schema {
+class DefaultPermissionSchema extends Schema {
   up () {
-    this.create('permissions', (table) => {
+    this.create('default_permissions', (table) => {
       table.increments()
       table
         .integer('resource_id')
@@ -19,12 +19,6 @@ class RoleSchema extends Schema {
         .references('id')
         .inTable('roles')
         .notNullable()
-      table
-        .integer('user_id')
-        .unsigned()
-        .references('id')
-        .inTable('users')
-        .notNullable()
       table.boolean('create').notNullable().defaultTo(true)
       table.boolean('read').notNullable().defaultTo(true)
       table.boolean('update').notNullable().defaultTo(true)
@@ -34,8 +28,8 @@ class RoleSchema extends Schema {
   }
 
   down () {
-    this.drop('permissions')
+    this.drop('default_permissions')
   }
 }
 
-module.exports = RoleSchema
+module.exports = DefaultPermissionSchema
