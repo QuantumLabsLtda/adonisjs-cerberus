@@ -21,11 +21,13 @@ Cerberus is a library that adds roles, resources and permissions to [Auth System
   - [Consuming Models](#consuming-models)
     - [Roles](#roles)
     - [Resources](#resources)
+    - [DefaultPermissions](#defaultpermissions)
     - [Permissions](#permissions)
     - [Binding User to Role](#binding-user-to-role)
+    - [Inheriting rights from DefaultPermissions](#inheriting-rights-from-defaultpermissions)
 - [Commands](#commands)
   - [Init](#init)
-  - [Permission](#permission)  
+  - [DefaultPermission](#default-permission)  
   - [Resource](#resource)  
   - [Role](#role)  
 
@@ -33,6 +35,9 @@ Cerberus is a library that adds roles, resources and permissions to [Auth System
 - [Tips](#tips)
 
 ## Concept
+Cerberus is a collection of models, commands, migrations and a middleware to help you managing User Access Rights in an Adonis.js API.
+
+**Warning*: Cerberus doesn't **yet** manage *Controllers* and *Routes* for you. You'll need to create your custom methods using Cerberus Models.*
 
 To start using Cerberus properly, you need to understand some basic concepts behind the library. There are 3 main pillars (A.K.A Cerberus Heads), they are:
 
@@ -44,7 +49,8 @@ A **Role** is an User responsabilty in your API (e.g., Admin, Moderator, User, S
 
 A **Resource** can be a *Controller*, *Model* or any resource in your API that you want to protect (e.g., User, Profile, Post, etc.).
 
-And last but not least, we have **Permissions**. A **Permission** is basically the junction of a *Role* and a *Resource*, with boolean values for each access right that the role should have.
+And we have **Permissions**. A **Permission** is basically the junction of *Role* and a *Resource*, with boolean values for each access right that a *Role* should give to a specific `user_id`. With **Permissions** we also have **DefaultPermissions**, they are *Role*-specific default values for **Permissions** boolean accesses.
+Every new *Permission*, should inherit from *DefaultPermission* rights, but they can assume whatever value you want.
 
 The accesses are:
 
@@ -53,12 +59,61 @@ The accesses are:
 3. Update
 4. Delete
 
-Then, you can create **Roles** and give **Permissions** to specific **Resources**.
+Then, you can create **Roles** with **DefaultPermissions** and give **Permissions** to specific **Resources** and **Users**.
+
+E.g.: You can create an "Admin" *Role* with a *DefaultPermission* to "Posts" *Resource*, and using the *Permission* model you can create a specific *Permission* to your User.
+
+*Role*
+```json
+{
+  "id": 1,
+  "name": "Admin",
+  "slug": "admin"
+}
+```
+
+*Resource*
+```json
+{
+  "id": 4,
+  "name": "Posts",
+  "slug": "posts"
+}
+```
+
+*DefaultPermission*
+```json
+{
+  "id": 1,
+  "resourceId": 4,
+  "roleId": 1,
+  "create": true,
+  "read": true,
+  "update": true,
+  "delete" : true
+}
+```
+
+*Permission*
+```json
+{
+  "id": 1,
+  "resourceId": 4,
+  "roleId": 1,
+  "userId": 1,
+  "create": true,
+  "read": true,
+  "update": true,
+  "delete" : true
+}
+```
+
+The **Guard** middleware **will check values against Permission record, not DefaultPermission values.**
 
 ## Tables diagram
 
 <p align="center">
-<img src="https://i.imgur.com/6urqQFn.png" alt="Cerberus" title="Cerberus" align="center"/>
+<img src="https://i.imgur.com/2vi2KRo.png" alt="Cerberus" title="Cerberus" align="center"/>
 </p>
 
 ## Setup
@@ -175,30 +230,30 @@ Arguments:
   slug               Short name for resource
 
 Options:
-  -p, --permission   Generate permissions
-  -a, --always-ask   Ask which permissions give in each Resource once (false by default)
+  -p, --defaultPermission   Generate default permissions
+  -a, --always-ask   Ask which rights give in each Resource once (false by default)
   --from-models      Generate a resource for each app Model
   --from-controllers Generate a resource for each app Controller
 ```
 
 This command creates a new *resource* into resources table. You only need to specify the `name` of resource, the `slug` argument is optional.
 The options are:
-  `-p, --permission` - Generate permissions
-  `-a, --always-ask` - Ask which permissions give in each Resource once (false by default)
+  `-p, --defaultPermission` - Generate default permissions
+  `-a, --always-ask` - Ask which rights give in each Resource once (false by default)
   `--from-models` - Generate a resource for each app Model
   `--from-controllers` - Generate a resource for each app Controller
 
-#### Permission
+#### Default Permission
 
 ```shell
-cerberus:permission [options]
+cerberus:defaultPermission [options]
 
 Options:
-  -a, --all               Run permission creation for each Resource in database
+  -a, --all               Run default permission creation for each Resource in database
   --resource-name <value> Name of resource
 ```
 
-This command creates a new *permission* into permissions table. You need to specify a Resource name then, *Cerberus* will create a permission record with the specified Resource *name*.
+This command creates a new *default permission* into default_permissions table. You need to specify a Resource name, then, *Cerberus* creates a default permission record with the specified Resource *name*.
 
 ## Usage
 
@@ -246,7 +301,7 @@ Route
 
 ### Consuming Models
 
-You can use the Cerberus Models to create *Roles*, *Resources* and *Permissions* in your own code, for creating seeds or a CRUD to manage Cerberus stuff. It's simple:
+You **should** use Cerberus Models to create *Roles*, *Resources* and *Permissions* in your own code. It's also useful for creating seeds or a complete CRUD to manage your Cerberus stuff. It's simple to use:
 
 #### Roles
 
@@ -294,6 +349,33 @@ You can use the Cerberus Models to create *Roles*, *Resources* and *Permissions*
   // You can use any Lucid methods you want
 ```
 
+#### DefaultPermissions
+
+```js
+  const DefaultPermission = use('Cerberus/Models/DefaultPermission')
+
+  // Creating a new DefaultPermission
+  await Permission.create({
+    role_id: role.id,
+    resource_id: resource.id,
+    create: false,
+    read: true,
+    update: false,
+    delete: false
+  })
+
+  // or
+
+  let defaultPermission = await DefaultPermission.find(1)
+
+  defaultPermission.create = true
+  defaultPermission.update = true
+
+  await defaultPermission.save()
+
+  // You can use any Lucid methods you want
+```
+
 #### Permissions
 
 ```js
@@ -302,6 +384,7 @@ You can use the Cerberus Models to create *Roles*, *Resources* and *Permissions*
   // Creating a new Permission
   await Permission.create({
     role_id: role.id,
+    user_id: user.id,
     resource_id: resource.id,
     create: false,
     read: true,
@@ -335,6 +418,42 @@ You can simply bind an existing **User** to a **Role**:
   user.role_id = 1
 
   await user.save()
+```
+
+#### Inheriting rights from DefaultPermissions
+
+You can inherit rights from DefaultPermissions to Permission:
+
+```js
+  const DefaultPermission = use('Cerberus/Models/DefaultPermission')
+  const Permission = use('App/Models/Permission')
+  const User = use('App/Models/User')
+  
+  // Fetches the current user
+  let user = await User.find(1)
+
+  // Get the default permission
+  let defaultPermission = await DefaultPermission
+      .query()
+      .where('resourceId', resource.id)
+      .orderBy('createdAt', 'desc')
+      .limit(1)
+      .fetch()
+
+  defaultPermission = defaultPermission.first()
+
+  if (defaultPermission) {
+    // Create the default permission
+    await Permission.create({
+        roleId,
+        user_id: user.id,
+        resourceId: resource.id,
+        create: defaultPermission.create,
+        read: defaultPermission.read,
+        update: defaultPermission.update,
+        delete: defaultPermission.delete
+      })
+  }
 ```
 
 ## Errors
