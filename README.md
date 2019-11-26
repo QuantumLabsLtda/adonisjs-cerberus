@@ -282,7 +282,7 @@ You can also use multiple permissions in your route:
 */
 Route
   .post('register', 'UserController.register')
-  .middleware(['auth', 'guard: users.create, users.read'])
+  .middleware(['auth', 'guard: user.create, user.read'])
 ```
 
 And it's possible to use multiple resources too:
