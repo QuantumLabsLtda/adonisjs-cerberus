@@ -24,7 +24,7 @@ class BaseDefaultPermission {
     // Asks for role slug
     if (!this.roleSlug) {
       this.roleSlug = await this
-        .ask('Which role should I bind to this defaultPermission? (Use slug name)')
+        .ask('Which role should I bind to this default permission? (Use slug name)')
     }
 
     // Check if needs to always ask the defaultPermissions
@@ -100,7 +100,7 @@ class BaseDefaultPermission {
       }, trx)
     })
 
-    return this.info(`DefaultPermissions for ${resourceName} resource created successfully!`)
+    return this.info(`Default Permissions for ${resourceName} resource created successfully!`)
   }
 }
 
