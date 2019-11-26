@@ -1,6 +1,6 @@
 {
   "name": "@quantumlabs/adonisjs-cerberus",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Adonis roles and permissions provider",
   "main": "index.js",
   "directories": {

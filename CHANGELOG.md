@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/2.0.0...2.0.1) (2019-11-26)
+
+
+### Bug Fixes
+
+* permission schema name ([df9df71](https://github.com/QuantumLabsLtda/adonisjs-cerberus/commit/df9df71adaafcfaa2df861d3dd0c4061280e17c2))
+
+
+
 # [2.0.0](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/1.1.2...2.0.0) (2019-11-26)
 
 
@@ -37,7 +46,6 @@
 ### Features
 
 * **pakcage.js/japafile.js/util.spec.js:** set the suit test & wrote first test ([#5](https://github.com/QuantumLabsLtda/adonisjs-cerberus/issues/5)) ([add2a34](https://github.com/QuantumLabsLtda/adonisjs-cerberus/commit/add2a349d92f7dc7ae99c403f22270ea55168156))
-
 
 # [1.1.0](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/1.0.1...1.1.0) (2019-09-20)
 
