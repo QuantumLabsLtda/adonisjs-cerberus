@@ -77,8 +77,13 @@ class ResourceCommand extends Command {
     if (!slug) slug = name
 
     await Database.transaction(async (trx) => {
-      // Create the resource
-      await Resource.create({ name, slug: camelize(slug) }, trx)
+      const existingResource = await Resource.findBy('slug', camelize(slug))
+      if (existingResource) {
+        this.warn(`${existingResource.name} already exists.`)
+      } else {
+        // Create the resource
+        await Resource.create({ name, slug: camelize(slug) }, trx)
+      }
     })
 
     this.success(`${this.icon('success')} resource ${name} created.`)
