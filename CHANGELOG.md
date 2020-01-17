@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/2.0.1...2.0.2) (2020-01-17)
+
+
+### Bug Fixes
+
+* **commands/Resource.js:** don't insert duplicated resources ([ce9872](https://github.com/QuantumLabsLtda/adonisjs-cerberus/commit/ce9872befa87f2c7138cce4e86891429fce0ba07))
+
 ## [2.0.1](https://github.com/QuantumLabsLtda/adonisjs-cerberus/compare/2.0.0...2.0.1) (2019-11-26)
 
 
