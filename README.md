@@ -426,7 +426,7 @@ You can inherit rights from DefaultPermissions to Permission:
 
 ```js
   const DefaultPermission = use('Cerberus/Models/DefaultPermission')
-  const Permission = use('App/Models/Permission')
+  const Permission = use('Cerberus/Models/Permission')
   const User = use('App/Models/User')
   
   // Fetches the current user
